@@ -16,19 +16,25 @@ window.onscroll = () => {
         let height = sec.offsetHeight;
         let id = sec.getAttribute('id');
 
-        if(top >= offset && top < offset + height) {
-            navLinks.forEach(links => {
-                links.classList.remove('active');
-                document.querySelector('header nav a[href*=' + id + ']').classList.add('active');
-            });
-        };
+        if (top >= offset && top < offset + height) {
+            navLinks.forEach(link => link.classList.remove('active'));
+            let activeLink = document.querySelector('header nav a[href*=' + id + ']');
+            if (activeLink) activeLink.classList.add('active');
+        }
     });
 
-    // Sticky Header
     let header = document.querySelector('header');
     header.classList.toggle('sticky', window.scrollY > 100);
 
-    // Remove menu icon and navbar when click navbar links (scroll)
+    // Close mobile menu on scroll
     menuIcon.classList.remove('bx-x');
     navbar.classList.remove('active');
 };
+
+// Close navbar when a nav link is clicked (mobile)
+navLinks.forEach(link => {
+    link.addEventListener('click', () => {
+        menuIcon.classList.remove('bx-x');
+        navbar.classList.remove('active');
+    });
+});
